@@ -16,10 +16,11 @@ import java.util.Scanner;
 ///
 
 // need these files to run this code, other files are made in code
-///
+/// accountNameList.txt
 /// hintList.txt
 /// passwordList.txt
 /// usernameList.txt
+/// 
 /// 
 
 
@@ -29,23 +30,56 @@ public class MainsPassword {
         File passwordNamesListFile = new File("passwordList.txt");
         ArrayList<String> check = createList(passwordNamesListFile);
 
-        
-        if (check.isEmpty() == true){
-            System.out.println("first time login! Create an Account");
-            createAccount(scanner);
-        }else{
-            logIn(scanner);
+        boolean hi=true;
+        while (hi) {
+            if (check.isEmpty() == true){
+                System.out.println("first time login! Create an Account");
+                createAccount(scanner);
+            }else{
+                // if (scanner.hasNextLine()) {
+                //     scanner.nextInt(); 
+                // }
+                System.out.println("what would you like to do?");
+                System.out.println("\t1. Create new Account\n\t2. Login\n\t3. See account Names\n\t4.Exit");
+                System.out.print("Enter your choice (1-4): ");
+                int choiceFirst = scanner.nextInt();
+    
+                switch (choiceFirst) {
+                    case 1:
+                        createAccount(scanner);
+                        break;
+                    case 2:
+                        logIn(scanner);
+                         break;
+                    case 3:
+                        File accNameLIst = new File("accountNameList.txt");
+                        ArrayList<String> checkAccNameArrayList = createList(accNameLIst);
+                        System.out.println(checkAccNameArrayList.toString());
+                        
+                        break;
+                    case 4:
+    
+                        break;
+                    default:
+                        System.out.println("no valid choice\nexiting......");
+                        hi =false;
+                        break;
+                }
+            
         }
 
-        scanner.close();
+    }
+    
+    scanner.close();
 
     }
 
     public static void createAccount(Scanner scanner){
+        newAccountName(scanner);
         newUsername(scanner);
         newPassword(scanner);
         newHint(scanner);
-        newAccountName(scanner);
+        
         
 
 
@@ -65,8 +99,11 @@ public class MainsPassword {
 
             while (true) {
                 
+                if (scanner.hasNextLine()) {
+                    scanner.nextLine(); 
+                }
                 System.out.print("What is the Account name: ");
-                String accName = scanner.next();
+                String accName = scanner.nextLine();
                 File NamesListFile = new File("accountNameList.txt");
                 // ArrayList<String> NameList = createList(NamesListFile);
         
@@ -122,8 +159,11 @@ public class MainsPassword {
 
     public static String newHint(Scanner ui){
         System.out.print("Give a password hint for yourself: ");
-        String hint = ui.next();
-
+        if (ui.hasNextLine()) {
+            ui.nextLine(); 
+        }
+        String hint = ui.nextLine();
+        
         File file = new File("hintList.txt");
         
         try (FileWriter fr = new FileWriter(file, true)) {
@@ -137,19 +177,19 @@ public class MainsPassword {
     }
 
 
-    public static String newCategory(Scanner ui){////assign your account to a category
-        System.out.println("what category is your actount: \n\t1.Bussines\n\t2.School\n\t3.Personal");
+    public static String newCategory(Scanner ui, String accName){////assign your account to a category
+        System.out.println("what category is your account: \n\t1.Business\n\t2.School\n\t3.Personal");
         String cat = ui.next();
         while (true){
             if (cat.equals("1")||cat.equals("2")||cat.equals("3")){
                 break;
             }
-            System.out.println("what category is your actount: \n\t1.Bussines\n\t2.School\n\t3.Personal");
+            System.out.println("what category is your account: \n\t1.Business\n\t2.School\n\t3.Personal");
             cat = ui.nextLine(); 
         }
         //make the new inputs only be saved at the end 
         //remove once when nearing end 
-        File file = new File("categoryList.txt");
+        File file = new File(accName+"CategoryList.txt");
         
         try (FileWriter fr = new FileWriter(file, true)) {
             fr.write(cat+"\n");
@@ -181,6 +221,9 @@ public class MainsPassword {
 
     public static String newUsername(Scanner ui){//make a new username 
         System.out.print("Choose your username: ");
+        if (ui.hasNextLine()) {
+            ui.nextLine(); 
+        }
         String name = ui.next();
 
         
@@ -300,7 +343,7 @@ public class MainsPassword {
         boolean continueRunning = true;
 
         // Main loop for showcasing exceptions
-        while (continueRunning) {
+        while (continueRunning) {//TODO remove the extra options 
             // Display the menu of options
             System.out.println("\nSelect an exception to showcase:");
             System.out.println("1. Add an Account");
@@ -342,10 +385,10 @@ public class MainsPassword {
                 } catch (IOException e) {
                     System.err.println("An error with pas");
                 }
-                    newCategory(scanner);
+                    newCategory(scanner,accName);
                     break;
                 case 2://where you display content
-                    System.out.println("would you like to see \n\t1. Alls acounts\n\t2. Bussines\n\t3.School\n\t4.Personal");
+                    System.out.println("would you like to see \n\t1. Alls acounts\n\t2. Bussines\n\t3. School\n\t4. Personal");
                     System.out.print("Enter your choice (1-4): ");
                     int choice5 = scanner.nextInt();
 
@@ -373,30 +416,30 @@ public class MainsPassword {
 
                             break;
                         case 3:
-                            File schoolUserFile = new File(accName + "UsernameList.txt");
+                            File schoolUserFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> schoolUArrayList = createList(schoolUserFile);
-                            File schoolPasswordFile = new File(accName + "PasswordList.txt");
+                            File schoolPasswordFile = new File(accName+"PasswordList.txt");
                             ArrayList<String> schoolPArrayList = createList(schoolPasswordFile);
-                            File schoolCategory = new File(accName + "CategoryList.txt");
+                            File schoolCategory = new File(accName+"CategoryList.txt");
                             ArrayList<String> schoolCateList = createList(schoolCategory);
                             for (int i = 0; i < schoolCateList.size(); i++) {
                                 if (schoolCateList.get(i).equals("2")) { 
-                                    System.out.println("Username: " + schoolUArrayList.get(i));
-                                    System.out.println("Password: " + schoolPArrayList.get(i) + "\n");
+                                    System.out.println("Username: "+schoolUArrayList.get(i));
+                                    System.out.println("Password: "+schoolPArrayList.get(i) + "\n");
                                 }
                             }
                             break;
                         case 4:
-                            File personalUserFile = new File(accName + "UsernameList.txt");
+                            File personalUserFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> personalUArrayList = createList(personalUserFile);
-                            File personalPasswordFile = new File(accName + "PasswordList.txt");
+                            File personalPasswordFile = new File(accName+"PasswordList.txt");
                             ArrayList<String> personalPArrayList = createList(personalPasswordFile);
-                            File personalCategory = new File(accName + "CategoryList.txt");
+                            File personalCategory = new File(accName+"CategoryList.txt");
                             ArrayList<String> personalCateList = createList(personalCategory);
-                            for (int i = 0; i < personalCateList.size(); i++) {
+                            for (int i = 0; i<personalCateList.size(); i++) {
                                 if (personalCateList.get(i).equals("3")) { 
-                                    System.out.println("Username: " + personalUArrayList.get(i));
-                                    System.out.println("Password: " + personalPArrayList.get(i) + "\n");
+                                    System.out.println("Username: "+personalUArrayList.get(i));
+                                    System.out.println("Password: "+personalPArrayList.get(i) + "\n");
                                 }
                             }
                             break;
@@ -409,6 +452,7 @@ public class MainsPassword {
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
                     System.out.println("\t1. Remove an account\n\t2.Modify an Account");
+                    System.out.print("Enter your choice (1-2): ");
                     int choice2 = scanner.nextInt();
 
                         switch (choice2) {
@@ -465,6 +509,7 @@ public class MainsPassword {
                                 
                                 System.out.println("What would you like to modify?");
                                 System.out.println("\t1. Username\n\t2. Password");
+                                System.out.print("Enter your choice (1-2): ");
                                 int choice3 = scanner.nextInt();
                                 switch (choice3) {
                                     case 1: 
