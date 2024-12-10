@@ -345,7 +345,7 @@ public class MainsPassword {
         // Main loop for showcasing exceptions
         while (continueRunning) {//TODO remove the extra options 
             // Display the menu of options
-            System.out.println("\nSelect an exception to showcase:");
+            System.out.println("\nWhat would you like to do?:");
             System.out.println("1. Add an Account");
             System.out.println("2. See Acounts");
             System.out.println("3. Modify an Account");
@@ -388,7 +388,7 @@ public class MainsPassword {
                     newCategory(scanner,accName);
                     break;
                 case 2://where you display content
-                    System.out.println("would you like to see \n\t1. Alls acounts\n\t2. Bussines\n\t3. School\n\t4. Personal");
+                    System.out.println("would you like to see \n\t1. All accounts\n\t2. Buisness\n\t3. School\n\t4. Personal");
                     System.out.print("Enter your choice (1-4): ");
                     int choice5 = scanner.nextInt();
 
