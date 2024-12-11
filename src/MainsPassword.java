@@ -367,7 +367,7 @@ public class MainsPassword {
                             System.err.println("An error with name");
                         }
 
-                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2. Generate a password\n\t\t3. Back");
+                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2. Generate a password");
                     System.out.println("\nEnter choice (1-3)");
                     int ychoice = 0;
                     try {
