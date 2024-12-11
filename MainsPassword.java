@@ -28,6 +28,7 @@ import java.util.random.*;
 public class MainsPassword {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        // turn the passwordList into array list
         File passwordNamesListFile = new File("passwordList.txt");
         ArrayList<String> check = createList(passwordNamesListFile);
 
@@ -47,13 +48,14 @@ public class MainsPassword {
                 int choiceFirst = scanner.nextInt();
     
                 switch (choiceFirst) {
-                    case 1:
+                    case 1://create account
                         createAccount(scanner);
                         break;
-                    case 2:
+                    case 2://log in
                         logIn(scanner);
+                        hi = false;
                          break;
-                    case 3:
+                    case 3:// see account names
                         File accNameLIst = new File("accountNameList.txt");
                         ArrayList<String> checkAccNameArrayList = createList(accNameLIst);
                         System.out.println(checkAccNameArrayList.toString());
@@ -74,7 +76,11 @@ public class MainsPassword {
     } scanner.close();
     }
 
-    public static void createAccount(Scanner scanner){
+    public static void createAccount(Scanner scanner){//have the user creat an account 
+        if (scanner.hasNextLine()) {
+            // System.out.println();
+            scanner.nextLine(); 
+        }
         newAccountName(scanner);
         newUsername(scanner);
         newPassword(scanner);
@@ -85,12 +91,14 @@ public class MainsPassword {
         // boolean hi = true;
         int wrongAttempt = 0;
         while (true) {
-            
+            //if users get attemp wrong 3 times then kick them out
             if (wrongAttempt == 3){
                 System.out.println("shutting down");
                 break;
             }
 
+            //get the account name user index in the array then ask user for more info and compare to the same index where the account name is
+            //  if right to successfulLogin() and if wrong end program
             while (true) {
                 
                 if (scanner.hasNextLine()) {
@@ -99,8 +107,7 @@ public class MainsPassword {
                 System.out.print("What is the Account name: ");
                 String accName = scanner.nextLine();
                 File NamesListFile = new File("accountNameList.txt");
-                // ArrayList<String> NameList = createList(NamesListFile);
-        
+                
                 int accNameInArrayList = checkEntriesInListForItem(NamesListFile, accName);
                 if (accNameInArrayList == -1){
                     wrongAttempt++;
@@ -110,7 +117,6 @@ public class MainsPassword {
                     System.out.print("What is the Username: ");
                     String userName = scanner.next();
                     File userNamesListFile = new File("usernameList.txt");
-                    // ArrayList<String> userNameList = createList(userNamesListFile);
                     String correctUserName = getListNum(userNamesListFile, accNameInArrayList);
                     if (correctUserName.equals(userName)){
                         File hintListFile = new File("hintList.txt");
@@ -119,14 +125,13 @@ public class MainsPassword {
                         System.out.print("What is the Password: ");
                         String password = scanner.next();
                         File passwordNamesListFile = new File("passwordList.txt");
-                        // ArrayList<String> passwordList = createList(passwordNamesListFile);
                         String correctpassword = getListNum(passwordNamesListFile, accNameInArrayList);
                         if (correctpassword.equals(password)){
                             System.out.println("Yor've logged in");
                             successfulLogin(scanner, accName);
                             wrongAttempt = 3;
                             break;
-                        }else{//
+                        }else{
                             System.out.println("Wrong password");
                             wrongAttempt++;
                             System.out.println("Attempt "+wrongAttempt+"/3");
@@ -145,7 +150,7 @@ public class MainsPassword {
         }
     }
 
-    public static String newHint(Scanner ui){
+    public static String newHint(Scanner ui){// ask user to give hint for account
         System.out.print("Give a password hint for yourself: ");
         if (ui.hasNextLine()) {
             ui.nextLine(); 
@@ -210,9 +215,9 @@ public class MainsPassword {
 
     public static String newUsername(Scanner ui){//make a new username 
         System.out.print("Choose your username: ");
-        if (ui.hasNextLine()) {
-            ui.nextLine(); 
-        }
+        // if (ui.hasNextLine()) {
+        //     ui.nextLine(); //TODO if doesn't work on school laptops add this back
+        // }
         String name = ui.next();
 
         
@@ -249,7 +254,7 @@ public class MainsPassword {
     }
 
     public static ArrayList<String> createList(File file){//return  an arrayList of a given file with each line being a differnt array var
-        
+        //turn file into an arrayList with each line being a new index
        
         ArrayList<String> list = new ArrayList<String>();
         try (Scanner s = new Scanner(file)) { 
@@ -300,8 +305,9 @@ public class MainsPassword {
 
     }
 
-    public static void successfulLogin(Scanner scanner, String accName){
+    public static void successfulLogin(Scanner scanner, String accName){//let user deide what to do with their passwords and usernames 
 
+        //create new files for the account name
         File f = new File(accName+"PasswordList.txt");
         if(!f.exists() && !f.isDirectory()) { 
             try {
@@ -345,9 +351,9 @@ public class MainsPassword {
 
             // Handle the user's choice using a switch-case statement
             switch (choice) {
-                case 1:
-                    System.out.print("Choose your username: ");
-                    String name = scanner.next();
+                case 1:// add acount to the master accounts data
+                System.out.print("Choose your username: ");
+                String name = scanner.next();
 
                     File file2 = new File(accName+"UsernameList.txt");
             
@@ -379,14 +385,14 @@ public class MainsPassword {
                     int choice5 = scanner.nextInt();
 
                     switch (choice5) {
-                        case 1:
+                        case 1://print out all accounts
                             File passwordNamesListFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> check = createList(passwordNamesListFile);
                             File usernameListFile = new File(accName+"PasswordList.txt");
                             ArrayList<String> check2 = createList(usernameListFile);
                             System.out.println("Usernames: "+check.toString()+"\nPasswords: "+check2.toString());
                             break;
-                        case 2:
+                        case 2://print account if they have 1(Buisness) in the CategoryList print that index from all other lists
                             File userFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> uArrayList = createList(userFile);
                             File passwordFile = new File(accName+"PasswordList.txt");
@@ -400,7 +406,7 @@ public class MainsPassword {
                                 }
                             }
                             break;
-                        case 3:
+                        case 3://print account if they have 2(school) in the CategoryList print that index from all other lists
                             File schoolUserFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> schoolUArrayList = createList(schoolUserFile);
                             File schoolPasswordFile = new File(accName+"PasswordList.txt");
@@ -414,7 +420,7 @@ public class MainsPassword {
                                 }
                             }
                             break;
-                        case 4:
+                        case 4://print account if they have 3(personal) in the CategoryList print that index from all other lists
                             File personalUserFile = new File(accName+"UsernameList.txt");
                             ArrayList<String> personalUArrayList = createList(personalUserFile);
                             File personalPasswordFile = new File(accName+"PasswordList.txt");
@@ -440,7 +446,7 @@ public class MainsPassword {
                     int choice2 = scanner.nextInt();
 
                         switch (choice2) {
-                            case 1:
+                            case 1://reomve the indexs of the accounts from bother arrayLists
                                 int userInput = 0;
                                 File passwordNamesListFile2 = new File(accName+"UsernameList.txt");
                                 ArrayList<String> checkList2 = createList(passwordNamesListFile2);
@@ -466,7 +472,7 @@ public class MainsPassword {
                                 listToFile(usernameListFile2, check2two);
                                 System.out.println("Account "+ userInput+" has been removed");
                                 break;
-                            case 2:
+                            case 2://convert file into arrayList and modify thee index of the arrayLists
                                 System.out.println("Which account? (account number)");
                                 File usernameListFile3 = new File(accName+"UsernameList.txt");
                                 ArrayList<String> checkList3 = createList(usernameListFile3);
@@ -528,7 +534,18 @@ public class MainsPassword {
     }
 
 
-    public static void listToFile(File file,ArrayList<String> list){//set your account name   
+    public static void listToFile(File file,ArrayList<String> list){//write an ArrayList to a file with each index being a new line   
+        
+        
+        
+            try (FileWriter fr = new FileWriter(file)) {
+                for (int i =0;i<list.size();i++) {
+                fr.write(list.get(i)+"\n");  // Write each string to file, followed by a newline
+                }
+                fr.close();
+            }catch (IOException e) {
+                System.err.println("An error with listToFile\n"+e);
+            }
             
         try (FileWriter fr = new FileWriter(file)) {
             for (int i =0;i<list.size();i++) {
