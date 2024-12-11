@@ -3,18 +3,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.random.*;
+
 
 
 //souces:
 ///https://www.edureka.co/community/101325/how-do-i-check-if-a-file-exists-in-java#:~:text=To%20test%20to%20see%20if,directory%20exists%2C%20and%20false%20otherwise.
-/// 
+/// https://stackoverflow.com/questions/3753869/how-do-i-concatenate-two-strings-in-java 
 /// 
 
-/// TODO (ethan)
-/// 
-///Password Generation:
-///
+
 
 // need these files to run this code, other files are made in code
 /// accountNameList.txt
@@ -22,12 +19,14 @@ import java.util.random.*;
 /// passwordList.txt
 /// usernameList.txt
 /// 
-/// 
+/// javac PasswordGenerations
 
 
 public class MainsPassword {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        // successfulLogin(scanner,"Ethan Shrodes");
         // turn the passwordList into array list
         File passwordNamesListFile = new File("passwordList.txt");
         ArrayList<String> check = createList(passwordNamesListFile);
@@ -53,7 +52,7 @@ public class MainsPassword {
                         break;
                     case 2://log in
                         logIn(scanner);
-                        hi = false;
+                        run = false;
                          break;
                     case 3:// see account names
                         File accNameLIst = new File("accountNameList.txt");
@@ -198,6 +197,19 @@ public class MainsPassword {
     public static String newPassword(Scanner ui){//make a new password  
         System.out.print("create your password: ");
         String pas = ui.next();
+
+        // PasswordRequirements test = new PasswordRequirements();
+        // boolean hi = true;
+        // while (hi) {
+        //     String testDone = test.meetRequirements(pas);
+        //     if (testDone == pas){
+        //         hi = false;
+
+        //     }else{
+                
+        //     }
+        // }
+        
         
         //make the new inputs only be saved at the end 
         //remove once when nearing end 
@@ -344,8 +356,10 @@ public class MainsPassword {
             System.out.println("1. Add an Account");
             System.out.println("2. See Acounts");
             System.out.println("3. Modify an Account");
-            System.out.println("4. Exit");
-            System.out.print("Enter your choice (1-4): ");
+            System.out.println("4. See categories");
+            System.out.println("5. Exit");
+            
+            System.out.print("Enter your choice (1-5): ");
 
             int choice = scanner.nextInt();
 
@@ -390,7 +404,15 @@ public class MainsPassword {
                             ArrayList<String> check = createList(passwordNamesListFile);
                             File usernameListFile = new File(accName+"PasswordList.txt");
                             ArrayList<String> check2 = createList(usernameListFile);
-                            System.out.println("Usernames: "+check.toString()+"\nPasswords: "+check2.toString());
+
+                            for(int i=0;i<check.size();i++){
+                                System.out.println("Account: "+i);
+                                System.out.println("\t- Username: "+check.get(i));
+                                System.out.println("\t-Password: "+check2.get(i));
+                                System.out.println("--------------------------------------------------------");
+                            }
+
+                            
                             break;
                         case 2://print account if they have 1(Buisness) in the CategoryList print that index from all other lists
                             File userFile = new File(accName+"UsernameList.txt");
@@ -401,8 +423,10 @@ public class MainsPassword {
                             ArrayList<String> cateList = createList(category);
                             for (int i =0;i<cateList.size();i++){
                                 if (cateList.get(i).equals("1")) {
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+uArrayList.get(i));
                                     System.out.println("Password: "+pArrayList.get(i)+"\n");
+                                    System.out.println("--------------------------------------------------------");
                                 }
                             }
                             break;
@@ -415,8 +439,11 @@ public class MainsPassword {
                             ArrayList<String> schoolCateList = createList(schoolCategory);
                             for (int i = 0; i < schoolCateList.size(); i++) {
                                 if (schoolCateList.get(i).equals("2")) { 
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+schoolUArrayList.get(i));
                                     System.out.println("Password: "+schoolPArrayList.get(i) + "\n");
+                                    System.out.println("--------------------------------------------------------");
+
                                 }
                             }
                             break;
@@ -429,8 +456,11 @@ public class MainsPassword {
                             ArrayList<String> personalCateList = createList(personalCategory);
                             for (int i = 0; i<personalCateList.size(); i++) {
                                 if (personalCateList.get(i).equals("3")) { 
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+personalUArrayList.get(i));
                                     System.out.println("Password: "+personalPArrayList.get(i) + "\n");
+                                    System.out.println("--------------------------------------------------------");
+
                                 }
                             }
                             break;
@@ -522,7 +552,13 @@ public class MainsPassword {
                             break;  
                         }
                     break;
-                case 4:
+                    case 4:
+                        System.out.println("Categories are: ");
+                        System.out.println("\tBusiness");
+                        System.out.println("\tSchool");
+                        System.out.println("\tPersonal");
+                    break;
+                    case 5:
                     System.out.println("Exiting the program. Goodbye!");
                     continueRunning = false;  // Exit the loop and end the program
                     break;
