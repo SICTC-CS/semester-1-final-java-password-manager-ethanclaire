@@ -35,7 +35,7 @@ public class MainsPassword {
         if (check.isEmpty() == true){
             System.out.println("First time login! Let's create an Account!");
             createAccount(scanner);
-            
+        }else{
         while (run) {
                 System.out.println("Which would you like to do?");
                 System.out.println("\t1. Create new Account\n\t2. Login\n\t3. View Account Names\n\t4. Exit");
@@ -479,6 +479,7 @@ public class MainsPassword {
                         default:
                             break;
                     }
+
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
                     System.out.println("\t1. Remove an account\n\t2.Modify an Account");
