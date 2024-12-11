@@ -1,3 +1,4 @@
+package src;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,9 +11,7 @@ import java.util.Scanner;
 /// https://stackoverflow.com/questions/3753869/how-do-i-concatenate-two-strings-in-java 
 /// 
 
-/// TODO (ethan)
-/// 
-///
+
 
 // need these files to run this code, other files are made in code
 /// accountNameList.txt
@@ -20,29 +19,26 @@ import java.util.Scanner;
 /// passwordList.txt
 /// usernameList.txt
 /// 
-/// 
+/// javac PasswordGenerations
 
 
-public class MainsPasswords {
+public class MainsPassword {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        // successfulLogin(scanner,"Ethan Shrodes");
         // turn the passwordList into array list
         File passwordNamesListFile = new File("passwordList.txt");
         ArrayList<String> check = createList(passwordNamesListFile);
-        
-        boolean hi=true;
-        while (hi) {
 
-        //test to see if passwordList.txt is vaild
-        // if not then make user create Account
-            if (check.isEmpty() == true){
-                System.out.println("first time login! Create an Account");
-                createAccount(scanner);
-                hi = false;
-            }else{
-                    // ask user what to do
-                System.out.println("what would you like to do?");
-                System.out.println("\t1. Create new Account\n\t2. Login\n\t3. See account Names\n\t4. Exit");
+        boolean run=true;
+        if (check.isEmpty() == true){
+            System.out.println("First time login! Let's create an Account!");
+            createAccount(scanner);
+            
+        while (run) {
+                System.out.println("Which would you like to do?");
+                System.out.println("\t1. Create new Account\n\t2. Login\n\t3. View Account Names\n\t4. Exit");
                 System.out.print("Enter your choice (1-4): ");
                 int choiceFirst = scanner.nextInt();
     
@@ -52,7 +48,7 @@ public class MainsPasswords {
                         break;
                     case 2://log in
                         logIn(scanner);
-                        hi = false;
+                        run = false;
                          break;
                     case 3:// see account names
                         File accNameLIst = new File("accountNameList.txt");
@@ -60,44 +56,32 @@ public class MainsPasswords {
                         System.out.println(checkAccNameArrayList.toString());
                         
                         break;
-                    case 4://exit
-    
+                    case 4:
+                        System.out.println("Now exiting...");
+                        run = false;
                         break;
                     default:
                         System.out.println("no valid choice\nexiting......");
-                        hi =false;
+                        run =false;
                         break;
                 }
-            
+            }
         }
-
-    }
-    
-    scanner.close();
-
+     scanner.close();
     }
 
-    public static void createAccount(Scanner scanner){//have the user creat an account 
-        if (scanner.hasNextLine()) {
-            scanner.nextLine(); 
-        }
+    public static void createAccount(Scanner scanner){//have the user create an account 
         newAccountName(scanner);
         newUsername(scanner);
         newPassword(scanner);
         newHint(scanner);
-        
-        
-
-
-
     }
-
     public static void logIn(Scanner scanner){
         
         // boolean hi = true;
         int wrongAttempt = 0;
         while (true) {
-            //if users get attemp wrong 3 times then kick them out
+            //if users get attempt wrong 3 times then kick them out
             if (wrongAttempt == 3){
                 System.out.println("shutting down");
                 break;
@@ -106,12 +90,8 @@ public class MainsPasswords {
             //get the account name user index in the array then ask user for more info and compare to the same index where the account name is
             //  if right to successfulLogin() and if wrong end program
             while (true) {
-                
-                if (scanner.hasNextLine()) {
-                    scanner.nextLine(); 
-                }
                 System.out.print("What is the Account name: ");
-                String accName = scanner.nextLine();
+                String accName = scanner.next();
                 File NamesListFile = new File("accountNameList.txt");
                 
                 int accNameInArrayList = checkEntriesInListForItem(NamesListFile, accName);
@@ -133,7 +113,7 @@ public class MainsPasswords {
                         File passwordNamesListFile = new File("passwordList.txt");
                         String correctpassword = getListNum(passwordNamesListFile, accNameInArrayList);
                         if (correctpassword.equals(password)){
-                            System.out.println("Yor've logged in");
+                            System.out.println("You've logged in successfully!");
                             successfulLogin(scanner, accName);
                             wrongAttempt = 3;
                             break;
@@ -146,34 +126,25 @@ public class MainsPasswords {
                         }
 
                     }else{
-                        System.out.println("Sorry, your Username deson't match the Account nam, Goodbye!");
+                        System.out.println("Sorry, your Username doesn't match the account name. Goodbye!");
                         wrongAttempt++;
                         System.out.println("Attempt "+wrongAttempt+"/3");
                         break;
                     }
                 }
-
             }
-
-
         }
-          
-
-
     }
 
     public static String newHint(Scanner ui){// ask user to give hint for account
-        System.out.print("Give a password hint for yourself: ");
-        if (ui.hasNextLine()) {
-            ui.nextLine(); 
-        }
-        String hint = ui.nextLine();
+        System.out.print("Create a password hint for yourself: ");
+        String hint = ui.next();
         
         File file = new File("hintList.txt");
         
         try (FileWriter fr = new FileWriter(file, true)) {
             fr.write(hint+"\n");
-            fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+            fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
         } catch (IOException e) {
             System.err.println("An error with hint"+e);
         }
@@ -190,7 +161,7 @@ public class MainsPasswords {
                 break;
             }
             System.out.println("what category is your account: \n\t1.Business\n\t2.School\n\t3.Personal");
-            cat = ui.nextLine(); 
+            cat = ui.next(); 
         }
         //make the new inputs only be saved at the end 
         //remove once when nearing end 
@@ -198,7 +169,7 @@ public class MainsPasswords {
         
         try (FileWriter fr = new FileWriter(file, true)) {
             fr.write(cat+"\n");
-            fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+            fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
         } catch (IOException e) {
             System.err.println("An error with cat");
         }
@@ -206,7 +177,7 @@ public class MainsPasswords {
         return cat;
     }
 
-    public static String newPassword(Scanner ui){//make a new password  
+    public static String newPassword(Scanner ui){ //make a new password  
         System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
         System.out.println("\nEnter choice (1-2)");
         int choice = 0;
@@ -219,8 +190,8 @@ public class MainsPasswords {
         String pas;
         switch (choice) {
             case 1:
-                System.out.print("create your passowrd: ");
-                pas = ui.next();
+                PasswordCheck check = new PasswordCheck();
+                pas = check.checkpassword(ui);
                 break;
             case 2:
                 PasswordGeneration gen = new PasswordGeneration();
@@ -233,9 +204,7 @@ public class MainsPasswords {
                 System.out.println("Your password is: "+pas);
                 break;
         }
-        
-        
-        //make the new inputs only be saved at the end 
+         //make the new inputs only be saved at the end 
         //remove once when nearing end 
         File file = new File("passwordList.txt");
         
@@ -245,15 +214,11 @@ public class MainsPasswords {
         } catch (IOException e) {
             System.err.println("An error with pas");
         }
-        
         return pas;
     }
 
     public static String newUsername(Scanner ui){//make a new username 
         System.out.print("Choose your username: ");
-        // if (ui.hasNextLine()) {
-        //     ui.nextLine(); //TODO if doesn't work on school laptops add this back
-        // }
         String name = ui.next();
 
         
@@ -263,7 +228,7 @@ public class MainsPasswords {
         
         try (FileWriter fr = new FileWriter(file, true)) {
             fr.write(name+"\n");
-            fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+            fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
         } catch (IOException e) {
             System.err.println("An error with name");
         }
@@ -273,7 +238,7 @@ public class MainsPasswords {
 
     public static String newAccountName(Scanner ui){//set your account name   
         System.out.print("Set your account name (this should be unique): ");
-        String acc = ui.nextLine();
+        String acc = ui.next();
         
         //make the new inputs only be saved at the end 
         //remove once when nearing end 
@@ -281,7 +246,7 @@ public class MainsPasswords {
         
         try (FileWriter fr = new FileWriter(file, true)) {
             fr.write(acc+"\n");
-            fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+            fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
         } catch (IOException e) {
             System.err.println("An error with acc");
         }
@@ -289,13 +254,13 @@ public class MainsPasswords {
         return acc;
     }
 
-    public static ArrayList<String> createList(File file){//return  an arrayList of a given file with each line being a differnt array var
+    public static ArrayList<String> createList(File file){//return  an arrayList of a given file with each line being a different array var
         //turn file into an arrayList with each line being a new index
        
         ArrayList<String> list = new ArrayList<String>();
         try (Scanner s = new Scanner(file)) { 
             while (s.hasNext()) {
-                list.add(s.nextLine()); 
+                list.add(s.next()); 
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,13 +269,13 @@ public class MainsPasswords {
         return list;
     }
 
-    public static String getListNum(File file,int c){//give the number for for he arrayLsit i.e. list[1] is "name" so function will return "name"
+    public static String getListNum(File file,int c){//give the number for for he arrayList i.e. list[1] is "name" so function will return "name"
         
        
         ArrayList<String> list = new ArrayList<String>();
         try (Scanner s = new Scanner(file)) {
             while (s.hasNext()) {
-                list.add(s.nextLine()); 
+                list.add(s.next()); 
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -319,11 +284,11 @@ public class MainsPasswords {
         return list.get(c);
     }
 
-    public static int checkEntriesInListForItem(File file,String checkFor){//give a string and will return you the loaction in the array where the entry is 
+    public static int checkEntriesInListForItem(File file,String checkFor){//give a string and will return you the location in the array where the entry is 
         ArrayList<String> list = new ArrayList<String>();
         try (Scanner s = new Scanner(file)) {
             while (s.hasNext()) {
-                list.add(s.nextLine()); 
+                list.add(s.next()); 
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -341,7 +306,7 @@ public class MainsPasswords {
 
     }
 
-    public static void successfulLogin(Scanner scanner, String accName){//let user deide what to do with their passwords and usernames 
+    public static void successfulLogin(Scanner scanner, String accName){//let user decide what to do with their passwords and usernames 
 
         //create new files for the account name
         File f = new File(accName+"PasswordList.txt");
@@ -374,75 +339,72 @@ public class MainsPasswords {
         boolean continueRunning = true;
 
         // Main loop for showcasing exceptions
-        while (continueRunning) {//TODO remove the extra options 
+        while (continueRunning) {
             // Display the menu of options
             System.out.println("\nWhat would you like to do?:");
             System.out.println("1. Add an Account");
-            System.out.println("2. See Acounts");
+            System.out.println("2. See Accounts");
             System.out.println("3. Modify an Account");
-            System.out.println("4. NumberFormatException");
-            System.out.println("5. IllegalArgumentException");
-            System.out.println("6. RuntimeException");
-            System.out.println("7. Exit");
-            System.out.print("Enter your choice (1-7): ");
+            System.out.println("4. See categories");
+            System.out.println("5. Exit");
+            
+            System.out.print("Enter your choice (1-5): ");
 
             int choice = scanner.nextInt();
 
             // Handle the user's choice using a switch-case statement
             switch (choice) {
-                case 1:// add acount to the master accounts data
-                System.out.print("Choose your username: ");
-                String name = scanner.next();
+                case 1: // add account to the master accounts data
+                    System.out.print("Choose your username: ");
+                    String name = scanner.next();
 
-                File file2 = new File(accName+"UsernameList.txt");
-        
-                try (FileWriter fr = new FileWriter(file2, true)) {
-                    fr.write(name+"\n");
-                    fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                } catch (IOException e) {
-                    System.err.println("An error with name");
-                }
-
-                System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
-                System.out.println("\nEnter choice (1-2)");
-                int ychoice = 0;
-                try {
-                    ychoice = scanner.nextInt();
-                } catch (Exception e) {
-                    
-                }
+                        File file2 = new File(accName+"UsernameList.txt");
                 
-                String pas;
-                switch (ychoice) {
-                    case 1:
-                        System.out.print("create your passowrd: ");
-                        pas = scanner.next();
-                        break;
-                    case 2:
-                        PasswordGeneration gen = new PasswordGeneration();
-                        pas = gen.generatePassword();
-                        System.out.println("Your password is: "+pas);
-                        break;
-                    default:
-                        gen = new PasswordGeneration();
-                        pas = gen.generatePassword();
-                        System.out.println("Your password is: "+pas);
-                        break;
+                        try (FileWriter fr = new FileWriter(file2, true)) {
+                            fr.write(name+"\n");
+                            fr.close() ;//append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                        } catch (IOException e) {
+                            System.err.println("An error with name");
+                        }
+
+                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
+                    System.out.println("\nEnter choice (1-2)");
+                    int ychoice = 0;
+                    try {
+                        ychoice = scanner.nextInt();
+                    } catch (Exception e) {
+                        
                     }
-                
-                //make the new inputs only be saved at the end 
-                //remove once when nearing end 
-                File file = new File(accName+"PasswordList.txt");
-                
-                try (FileWriter fr = new FileWriter(file, true)) {
-                    fr.write(pas+"\n");
-                    fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                } catch (IOException e) {
-                    System.err.println("An error with pas");
-                }
-                    newCategory(scanner,accName);
-                    break;
-                case 2://where you display content
+                    String pas;
+                    switch (ychoice) {
+                        case 1:
+                            PasswordCheck check = new PasswordCheck();
+                            pas = check.checkpassword(scanner);
+                            break;
+                        case 2:
+                            PasswordGeneration gen = new PasswordGeneration();
+                            pas = gen.generatePassword();
+                            System.out.println("Your password is: "+pas);
+                            break;
+                        default:
+                            gen = new PasswordGeneration();
+                            pas = gen.generatePassword();
+                            System.out.println("Your password is: "+pas);
+                            break;
+                        }
+                    //make the new inputs only be saved at the end 
+                    //remove once when nearing end 
+                    File file = new File(accName+"PasswordList.txt");
+                    
+                    try (FileWriter fr = new FileWriter(file, true)) {
+                        fr.write(pas+"\n");
+                        fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                    } catch (IOException e) {
+                        System.err.println("An error with pas");
+                    }
+                        newCategory(scanner,accName);
+                        break;
+                case 2: //where you display content
                     System.out.println("would you like to see \n\t1. All accounts\n\t2. Buisness\n\t3. School\n\t4. Personal");
                     System.out.print("Enter your choice (1-4): ");
                     int choice5 = scanner.nextInt();
@@ -453,7 +415,15 @@ public class MainsPasswords {
                             ArrayList<String> check = createList(passwordNamesListFile);
                             File usernameListFile = new File(accName+"PasswordList.txt");
                             ArrayList<String> check2 = createList(usernameListFile);
-                            System.out.println("Usernames: "+check.toString()+"\nPasswords: "+check2.toString());
+
+                            for(int i=0;i<check.size();i++){
+                                System.out.println("Account: "+i);
+                                System.out.println("\t- Username: "+check.get(i));
+                                System.out.println("\t-Password: "+check2.get(i));
+                                System.out.println("--------------------------------------------------------");
+                            }
+
+                            
                             break;
                         case 2://print account if they have 1(Buisness) in the CategoryList print that index from all other lists
                             File userFile = new File(accName+"UsernameList.txt");
@@ -464,11 +434,12 @@ public class MainsPasswords {
                             ArrayList<String> cateList = createList(category);
                             for (int i =0;i<cateList.size();i++){
                                 if (cateList.get(i).equals("1")) {
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+uArrayList.get(i));
                                     System.out.println("Password: "+pArrayList.get(i)+"\n");
+                                    System.out.println("--------------------------------------------------------");
                                 }
                             }
-
                             break;
                         case 3://print account if they have 2(school) in the CategoryList print that index from all other lists
                             File schoolUserFile = new File(accName+"UsernameList.txt");
@@ -479,8 +450,11 @@ public class MainsPasswords {
                             ArrayList<String> schoolCateList = createList(schoolCategory);
                             for (int i = 0; i < schoolCateList.size(); i++) {
                                 if (schoolCateList.get(i).equals("2")) { 
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+schoolUArrayList.get(i));
                                     System.out.println("Password: "+schoolPArrayList.get(i) + "\n");
+                                    System.out.println("--------------------------------------------------------");
+
                                 }
                             }
                             break;
@@ -493,17 +467,18 @@ public class MainsPasswords {
                             ArrayList<String> personalCateList = createList(personalCategory);
                             for (int i = 0; i<personalCateList.size(); i++) {
                                 if (personalCateList.get(i).equals("3")) { 
+                                    System.out.println("Account: "+i);
                                     System.out.println("Username: "+personalUArrayList.get(i));
                                     System.out.println("Password: "+personalPArrayList.get(i) + "\n");
+                                    System.out.println("--------------------------------------------------------");
+
                                 }
                             }
                             break;
+
                         default:
-                            System.out.println("not a vaild choice");
                             break;
                     }
-
-                    break;
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
                     System.out.println("\t1. Remove an account\n\t2.Modify an Account");
@@ -511,7 +486,7 @@ public class MainsPasswords {
                     int choice2 = scanner.nextInt();
 
                         switch (choice2) {
-                            case 1://reomve the indexs of the accounts from bother arrayLists
+                            case 1://remove the index of the accounts from other arrayLists
                                 int userInput = 0;
                                 File passwordNamesListFile2 = new File(accName+"UsernameList.txt");
                                 ArrayList<String> checkList2 = createList(passwordNamesListFile2);
@@ -521,7 +496,7 @@ public class MainsPasswords {
                                 System.out.println("Usernames: "+checkList2.toString()+"\nPasswords: "+check2two.toString());
                     
                                 try {
-                                    userInput = scanner.nextInt();
+                                    userInput = scanner.nextInt ();
                                 } catch (Exception e) {
                                     System.out.println("give an int next time, bye\n"+e);
                                     break;
@@ -530,9 +505,6 @@ public class MainsPasswords {
                                 if (createList(new File(accName+"PasswordList.txt")).size() <= realInput){
                                     System.out.println("No account "+userInput);
                                 }
-
-                                
-
                                 checkList2.remove(realInput);
                                 check2two.remove(realInput);
 
@@ -561,7 +533,6 @@ public class MainsPasswords {
                                 if (createList(new File(accName+"PasswordList.txt")).size() <= realInput2){
                                     System.out.println("No account "+userInput2);
                                 }
-                                
                                 System.out.println("What would you like to modify?");
                                 System.out.println("\t1. Username\n\t2. Password");
                                 System.out.print("Enter your choice (1-2): ");
@@ -587,48 +558,37 @@ public class MainsPasswords {
                                 }
                                 break;        
                             default:
-                            System.out.println("not a vaild choice");
+                                System.out.println("not a valid choice");
                             break;  
                         }
                     break;
-                case 4:
-                    // handleNumberFormatException(scanner);
+                    case 4:
+                        System.out.println("Categories are: ");
+                        System.out.println("\tBusiness");
+                        System.out.println("\tSchool");
+                        System.out.println("\tPersonal");
                     break;
-                case 5:
-                    // handleIllegalArgumentException(scanner);
-                    break;
-                case 6:
-                    // handleRuntimeException(scanner);
-                    break;
-                case 7:
+                    case 5:
                     System.out.println("Exiting the program. Goodbye!");
                     continueRunning = false;  // Exit the loop and end the program
                     break;
+
                 default:
-                    System.out.println("Invalid choice, please select a number between 1 and 7.");
+                    System.out.println("Invalid choice, please select a number between 1 and 4");
             }
         }
     }
-
-
     public static void listToFile(File file,ArrayList<String> list){//write an ArrayList to a file with each index being a new line   
-        
-        
-        
-            try (FileWriter fr = new FileWriter(file)) {
-                for (int i =0;i<list.size();i++) {
-                fr.write(list.get(i)+"\n");  // Write each string to file, followed by a newline
-                }
-                fr.close();
-            }catch (IOException e) {
-                System.err.println("An error with listToFile\n"+e);
+                    
+        try (FileWriter fr = new FileWriter(file)) {
+            for (int i =0;i<list.size();i++) {
+            fr.write(list.get(i)+"\n");  // Write each string to file, followed by a newline
             }
-            
+            fr.close();
+        }catch (IOException e) {
+            System.err.println("An error with listToFile\n"+e);
+        }  
     }
-
-        
-    
-
 }
 
 
