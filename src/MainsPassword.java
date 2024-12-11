@@ -367,9 +367,15 @@ public class MainsPassword {
                             System.err.println("An error with name");
                         }
 
+<<<<<<< HEAD
                         System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
                     System.out.println("\nEnter choice (1-2)");
                     int ychoice = 2;
+=======
+                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2. Generate a password\n\t\t3. Back");
+                    System.out.println("\nEnter choice (1-3)");
+                    int ychoice = 0;
+>>>>>>> 5f76fd71446f78ad61d09eff2aa67bc034ef83b2
                     try {
                         ychoice = scanner.nextInt();
                     } catch (Exception e) {
@@ -483,8 +489,8 @@ public class MainsPassword {
 
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
-                    System.out.println("\t1. Remove an account\n\t2.Modify an Account");
-                    System.out.print("Enter your choice (1-2): ");
+                    System.out.println("\t1. Remove an account\n\t2. Modify an Account\n\t3. Back");
+                    System.out.print("Enter your choice (1-3): ");
                     int choice2 = scanner.nextInt();
 
                         switch (choice2) {
@@ -549,8 +555,8 @@ public class MainsPassword {
                                     System.out.println("No account "+userInput2);
                                 }
                                 System.out.println("What would you like to modify?");
-                                System.out.println("\t1. Username\n\t2. Password");
-                                System.out.print("Enter your choice (1-2): ");
+                                System.out.println("\t1. Username\n\t2. Password\n\t3. Back");
+                                System.out.print("Enter your choice (1-3): ");
                                 int choice3 = scanner.nextInt();
                                 switch (choice3) {
                                     case 1: 
@@ -567,14 +573,18 @@ public class MainsPassword {
                                         listToFile(passwordListFile3, passwordNamesListFile3);
                                         System.out.println("Account "+userInput2+"'s password has changed");
                                         break;
+                                    case 3:
+                                        break;
                                     default:
                                         System.out.println("Not a valid choice");
                                         break;
                                 }
-                                break;        
+                                break;
+                            case 3:
+                                break;
                             default:
                                 System.out.println("not a valid choice");
-                            break;  
+                                break;  
                         }
                     break;
                     case 4:
