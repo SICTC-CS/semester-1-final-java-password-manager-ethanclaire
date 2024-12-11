@@ -355,117 +355,117 @@ public class MainsPassword {
             // Handle the user's choice using a switch-case statement
             switch (choice) {
                 case 1: // add account to the master accounts data
-                System.out.print("Choose your username: ");
-                String name = scanner.next();
+                    System.out.print("Choose your username: ");
+                    String name = scanner.next();
 
-                    File file2 = new File(accName+"UsernameList.txt");
-            
-                    try (FileWriter fr = new FileWriter(file2, true)) {
-                        fr.write(name+"\n");
-                        fr.close() ;//append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                    } catch (IOException e) {
-                        System.err.println("An error with name");
-                    }
-
-                    System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
-                System.out.println("\nEnter choice (1-2)");
-                int ychoice = 0;
-                try {
-                    ychoice = scanner.nextInt();
-                } catch (Exception e) {
-                    
-                }
+                        File file2 = new File(accName+"UsernameList.txt");
                 
-                String pas;
-                switch (ychoice) {
-                    case 1:
-                        PasswordCheck check = new PasswordCheck();
-                        pas = check.checkpassword(scanner);
-                        break;
-                    case 2:
-                        PasswordGeneration gen = new PasswordGeneration();
-                        pas = gen.generatePassword();
-                        System.out.println("Your password is: "+pas);
-                        break;
-                    default:
-                        gen = new PasswordGeneration();
-                        pas = gen.generatePassword();
-                        System.out.println("Your password is: "+pas);
-                        break;
-                    }
-                    
-                    //make the new inputs only be saved at the end 
-                    //remove once when nearing end 
-                    File file = new File(accName+"PasswordList.txt");
-                    
-                    try (FileWriter fr = new FileWriter(file, true)) {
-                        fr.write(pas+"\n");
-                        fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                    } catch (IOException e) {
-                        System.err.println("An error with pas");
-                    }
-                        newCategory(scanner,accName);
-                        break;
-                case 2://where you display content
-                    System.out.println("would you like to see \n\t1. All accounts\n\t2. Buisness\n\t3. School\n\t4. Personal");
-                    System.out.print("Enter your choice (1-4): ");
-                    int choice5 = scanner.nextInt();
+                        try (FileWriter fr = new FileWriter(file2, true)) {
+                            fr.write(name+"\n");
+                            fr.close() ;//append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                        } catch (IOException e) {
+                            System.err.println("An error with name");
+                        }
 
-                    switch (choice5) {
-                        case 1://print out all accounts
-                            File passwordNamesListFile = new File(accName+"UsernameList.txt");
-                            ArrayList<String> check = createList(passwordNamesListFile);
-                            File usernameListFile = new File(accName+"PasswordList.txt");
-                            ArrayList<String> check2 = createList(usernameListFile);
-                            System.out.println("Usernames: "+check.toString()+"\nPasswords: "+check2.toString());
+                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
+                    System.out.println("\nEnter choice (1-2)");
+                    int ychoice = 0;
+                    try {
+                        ychoice = scanner.nextInt();
+                    } catch (Exception e) {
+                        
+                    }
+                    
+                    String pas;
+                    switch (ychoice) {
+                        case 1:
+                            PasswordCheck check = new PasswordCheck();
+                            pas = check.checkpassword(scanner);
                             break;
-                        case 2://print account if they have 1(Business) in the CategoryList print that index from all other lists
-                            File userFile = new File(accName+"UsernameList.txt");
-                            ArrayList<String> uArrayList = createList(userFile);
-                            File passwordFile = new File(accName+"PasswordList.txt");
-                            ArrayList<String> pArrayList = createList(passwordFile);
-                            File category = new File(accName+"CategoryList.txt");
-                            ArrayList<String> cateList = createList(category);
-                            for (int i =0;i<cateList.size();i++){
-                                if (cateList.get(i).equals("1")) {
-                                    System.out.println("Username: "+uArrayList.get(i));
-                                    System.out.println("Password: "+pArrayList.get(i)+"\n");
-                                }
-                            }
-                            break;
-                        case 3://print account if they have 2(school) in the CategoryList print that index from all other lists
-                            File schoolUserFile = new File(accName+"UsernameList.txt");
-                            ArrayList<String> schoolUArrayList = createList(schoolUserFile);
-                            File schoolPasswordFile = new File(accName+"PasswordList.txt");
-                            ArrayList<String> schoolPArrayList = createList(schoolPasswordFile);
-                            File schoolCategory = new File(accName+"CategoryList.txt");
-                            ArrayList<String> schoolCateList = createList(schoolCategory);
-                            for (int i = 0; i < schoolCateList.size(); i++) {
-                                if (schoolCateList.get(i).equals("2")) { 
-                                    System.out.println("Username: "+schoolUArrayList.get(i));
-                                    System.out.println("Password: "+schoolPArrayList.get(i) + "\n");
-                                }
-                            }
-                            break;
-                        case 4://print account if they have 3(personal) in the CategoryList print that index from all other lists
-                            File personalUserFile = new File(accName+"UsernameList.txt");
-                            ArrayList<String> personalUArrayList = createList(personalUserFile);
-                            File personalPasswordFile = new File(accName+"PasswordList.txt");
-                            ArrayList<String> personalPArrayList = createList(personalPasswordFile);
-                            File personalCategory = new File(accName+"CategoryList.txt");
-                            ArrayList<String> personalCateList = createList(personalCategory);
-                            for (int i = 0; i<personalCateList.size(); i++) {
-                                if (personalCateList.get(i).equals("3")) { 
-                                    System.out.println("Username: "+personalUArrayList.get(i));
-                                    System.out.println("Password: "+personalPArrayList.get(i) + "\n");
-                                }
-                            }
+                        case 2:
+                            PasswordGeneration gen = new PasswordGeneration();
+                            pas = gen.generatePassword();
+                            System.out.println("Your password is: "+pas);
                             break;
                         default:
-                            System.out.println("not a valid choice");
+                            gen = new PasswordGeneration();
+                            pas = gen.generatePassword();
+                            System.out.println("Your password is: "+pas);
                             break;
-                    }
-                    break;
+                        }
+                        
+                        //make the new inputs only be saved at the end 
+                        //remove once when nearing end 
+                        File file = new File(accName+"PasswordList.txt");
+                        
+                        try (FileWriter fr = new FileWriter(file, true)) {
+                            fr.write(pas+"\n");
+                            fr.close(); //append code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                        } catch (IOException e) {
+                            System.err.println("An error with pas");
+                        }
+                            newCategory(scanner,accName);
+                            break;
+                    case 2://where you display content
+                        System.out.println("would you like to see \n\t1. All accounts\n\t2. Buisness\n\t3. School\n\t4. Personal");
+                        System.out.print("Enter your choice (1-4): ");
+                        int choice5 = scanner.nextInt();
+
+                        switch (choice5) {
+                            case 1://print out all accounts
+                                File passwordNamesListFile = new File(accName+"UsernameList.txt");
+                                ArrayList<String> check = createList(passwordNamesListFile);
+                                File usernameListFile = new File(accName+"PasswordList.txt");
+                                ArrayList<String> check2 = createList(usernameListFile);
+                                System.out.println("Usernames: "+check.toString()+"\nPasswords: "+check2.toString());
+                                break;
+                            case 2://print account if they have 1(Business) in the CategoryList print that index from all other lists
+                                File userFile = new File(accName+"UsernameList.txt");
+                                ArrayList<String> uArrayList = createList(userFile);
+                                File passwordFile = new File(accName+"PasswordList.txt");
+                                ArrayList<String> pArrayList = createList(passwordFile);
+                                File category = new File(accName+"CategoryList.txt");
+                                ArrayList<String> cateList = createList(category);
+                                for (int i =0;i<cateList.size();i++){
+                                    if (cateList.get(i).equals("1")) {
+                                        System.out.println("Username: "+uArrayList.get(i));
+                                        System.out.println("Password: "+pArrayList.get(i)+"\n");
+                                    }
+                                }
+                                break;
+                            case 3://print account if they have 2(school) in the CategoryList print that index from all other lists
+                                File schoolUserFile = new File(accName+"UsernameList.txt");
+                                ArrayList<String> schoolUArrayList = createList(schoolUserFile);
+                                File schoolPasswordFile = new File(accName+"PasswordList.txt");
+                                ArrayList<String> schoolPArrayList = createList(schoolPasswordFile);
+                                File schoolCategory = new File(accName+"CategoryList.txt");
+                                ArrayList<String> schoolCateList = createList(schoolCategory);
+                                for (int i = 0; i < schoolCateList.size(); i++) {
+                                    if (schoolCateList.get(i).equals("2")) { 
+                                        System.out.println("Username: "+schoolUArrayList.get(i));
+                                        System.out.println("Password: "+schoolPArrayList.get(i) + "\n");
+                                    }
+                                }
+                                break;
+                            case 4://print account if they have 3(personal) in the CategoryList print that index from all other lists
+                                File personalUserFile = new File(accName+"UsernameList.txt");
+                                ArrayList<String> personalUArrayList = createList(personalUserFile);
+                                File personalPasswordFile = new File(accName+"PasswordList.txt");
+                                ArrayList<String> personalPArrayList = createList(personalPasswordFile);
+                                File personalCategory = new File(accName+"CategoryList.txt");
+                                ArrayList<String> personalCateList = createList(personalCategory);
+                                for (int i = 0; i<personalCateList.size(); i++) {
+                                    if (personalCateList.get(i).equals("3")) { 
+                                        System.out.println("Username: "+personalUArrayList.get(i));
+                                        System.out.println("Password: "+personalPArrayList.get(i) + "\n");
+                                    }
+                                }
+                                break;
+                            default:
+                                System.out.println("not a valid choice");
+                                break;
+                        }
+                        break;
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
                     System.out.println("\t1. Remove an account\n\t2.Modify an Account");
