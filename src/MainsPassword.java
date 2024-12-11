@@ -369,7 +369,7 @@ public class MainsPassword {
 
                         System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
                     System.out.println("\nEnter choice (1-2)");
-                    int ychoice = 0;
+                    int ychoice = 2;
                     try {
                         ychoice = scanner.nextInt();
                     } catch (Exception e) {
@@ -479,6 +479,7 @@ public class MainsPassword {
                         default:
                             break;
                     }
+                    break;
 
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
@@ -495,6 +496,13 @@ public class MainsPassword {
                                 ArrayList<String> check2two = createList(usernameListFile2);
                                 System.out.println("which account?(account Number)");
                                 System.out.println("Usernames: "+checkList2.toString()+"\nPasswords: "+check2two.toString());
+
+                                for(int i=0;i<checkList2.size();i++){
+                                    System.out.println("Account: "+i);
+                                    System.out.println("\t- Username: "+checkList2.get(i));
+                                    System.out.println("\t-Password: "+check2two.get(i));
+                                    System.out.println("--------------------------------------------------------");
+                                }
                     
                                 try {
                                     userInput = scanner.nextInt ();
@@ -519,9 +527,15 @@ public class MainsPassword {
                                 ArrayList<String> checkList3 = createList(usernameListFile3);
                                 File passwordListFile3 = new File(accName+"PasswordList.txt");
                                 ArrayList<String> passwordNamesListFile3 = createList(passwordListFile3);
+                                
+                                for(int i=0;i<checkList3.size();i++){
+                                    System.out.println("Account: "+i);
+                                    System.out.println("\t- Username: "+checkList3.get(i));
+                                    System.out.println("\t-Password: "+passwordNamesListFile3.get(i));
+                                    System.out.println("--------------------------------------------------------");
+                                }
 
-                                System.out.println("Usernames: "+checkList3.toString());
-                                System.out.println("Passwords: "+passwordNamesListFile3.toString());
+                                
 
                                 int userInput2 = 0;
                                 try {

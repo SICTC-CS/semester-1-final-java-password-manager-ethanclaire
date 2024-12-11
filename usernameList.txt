@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-clairespin
-FireMaster
-=======
 Claire
->>>>>>> 22fdeaafe2cebd6b39a91b62f3133ba99eaecddc
+Water
