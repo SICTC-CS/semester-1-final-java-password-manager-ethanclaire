@@ -367,15 +367,9 @@ public class MainsPassword {
                             System.err.println("An error with name");
                         }
 
-<<<<<<< HEAD
-                        System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2.Generate a password");
-                    System.out.println("\nEnter choice (1-2)");
-                    int ychoice = 2;
-=======
                         System.out.println("\n\tWould you like to \n\t\t1. Enter your own password\n\t\t2. Generate a password\n\t\t3. Back");
                     System.out.println("\nEnter choice (1-3)");
                     int ychoice = 0;
->>>>>>> 5f76fd71446f78ad61d09eff2aa67bc034ef83b2
                     try {
                         ychoice = scanner.nextInt();
                     } catch (Exception e) {
@@ -423,7 +417,7 @@ public class MainsPassword {
                             ArrayList<String> check2 = createList(usernameListFile);
 
                             for(int i=0;i<check.size();i++){
-                                System.out.println("Account: "+i);
+                                System.out.println("Account: "+i+1);
                                 System.out.println("\t- Username: "+check.get(i));
                                 System.out.println("\t-Password: "+check2.get(i));
                                 System.out.println("--------------------------------------------------------");
@@ -504,7 +498,7 @@ public class MainsPassword {
                                 System.out.println("Usernames: "+checkList2.toString()+"\nPasswords: "+check2two.toString());
 
                                 for(int i=0;i<checkList2.size();i++){
-                                    System.out.println("Account: "+i);
+                                    System.out.println("Account: "+i+1);
                                     System.out.println("\t- Username: "+checkList2.get(i));
                                     System.out.println("\t-Password: "+check2two.get(i));
                                     System.out.println("--------------------------------------------------------");
@@ -535,7 +529,7 @@ public class MainsPassword {
                                 ArrayList<String> passwordNamesListFile3 = createList(passwordListFile3);
                                 
                                 for(int i=0;i<checkList3.size();i++){
-                                    System.out.println("Account: "+i);
+                                    System.out.println("Account: "+i+1);
                                     System.out.println("\t- Username: "+checkList3.get(i));
                                     System.out.println("\t-Password: "+passwordNamesListFile3.get(i));
                                     System.out.println("--------------------------------------------------------");
