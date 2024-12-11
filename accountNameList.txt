@@ -1,6 +1,1 @@
-<<<<<<< HEAD
-Claire
-Ethan Shrodes
-=======
-Amazon
->>>>>>> 22fdeaafe2cebd6b39a91b62f3133ba99eaecddc
+ClaireBear
