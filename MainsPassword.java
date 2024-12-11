@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.random.*;
 
 
 //souces:
@@ -30,16 +31,17 @@ public class MainsPassword {
         File passwordNamesListFile = new File("passwordList.txt");
         ArrayList<String> check = createList(passwordNamesListFile);
 
-        boolean hi=true;
-        while (hi) {
+        boolean run=true;
+        while (run) {
             if (check.isEmpty() == true){
-                System.out.println("first time login! Create an Account");
+                System.out.println("First time login! Create an Account");
                 createAccount(scanner);
+                
             }else{
                 // if (scanner.hasNextLine()) {
                 //     scanner.nextInt(); 
                 // }
-                System.out.println("what would you like to do?");
+                System.out.println("Which would you like to do?");
                 System.out.println("\t1. Create new Account\n\t2. Login\n\t3. See account Names\n\t4.Exit");
                 System.out.print("Enter your choice (1-4): ");
                 int choiceFirst = scanner.nextInt();
@@ -58,20 +60,18 @@ public class MainsPassword {
                         
                         break;
                     case 4:
-    
+                        System.out.println("Now exiting...");
+                        run = false;
                         break;
                     default:
                         System.out.println("no valid choice\nexiting......");
-                        hi =false;
+                        run =false;
                         break;
                 }
             
         }
 
-    }
-    
-    scanner.close();
-
+    } scanner.close();
     }
 
     public static void createAccount(Scanner scanner){
@@ -79,13 +79,7 @@ public class MainsPassword {
         newUsername(scanner);
         newPassword(scanner);
         newHint(scanner);
-        
-        
-
-
-
     }
-
     public static void logIn(Scanner scanner){
         
         // boolean hi = true;
@@ -147,14 +141,8 @@ public class MainsPassword {
                         break;
                     }
                 }
-
             }
-
-
         }
-          
-
-
     }
 
     public static String newHint(Scanner ui){
@@ -183,6 +171,7 @@ public class MainsPassword {
         while (true){
             if (cat.equals("1")||cat.equals("2")||cat.equals("3")){
                 break;
+                
             }
             System.out.println("what category is your account: \n\t1.Business\n\t2.School\n\t3.Personal");
             cat = ui.nextLine(); 
@@ -202,7 +191,7 @@ public class MainsPassword {
     }
 
     public static String newPassword(Scanner ui){//make a new password  
-        System.out.print("create your passowrd: ");
+        System.out.print("create your password: ");
         String pas = ui.next();
         
         //make the new inputs only be saved at the end 
@@ -349,44 +338,41 @@ public class MainsPassword {
             System.out.println("1. Add an Account");
             System.out.println("2. See Acounts");
             System.out.println("3. Modify an Account");
-            System.out.println("4. NumberFormatException");
-            System.out.println("5. IllegalArgumentException");
-            System.out.println("6. RuntimeException");
-            System.out.println("7. Exit");
-            System.out.print("Enter your choice (1-7): ");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice (1-4): ");
 
             int choice = scanner.nextInt();
 
             // Handle the user's choice using a switch-case statement
             switch (choice) {
                 case 1:
-                System.out.print("Choose your username: ");
-                String name = scanner.next();
+                    System.out.print("Choose your username: ");
+                    String name = scanner.next();
 
-                File file2 = new File(accName+"UsernameList.txt");
-        
-                try (FileWriter fr = new FileWriter(file2, true)) {
-                    fr.write(name+"\n");
-                    fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                } catch (IOException e) {
-                    System.err.println("An error with name");
-                }
+                    File file2 = new File(accName+"UsernameList.txt");
+            
+                    try (FileWriter fr = new FileWriter(file2, true)) {
+                        fr.write(name+"\n");
+                        fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                    } catch (IOException e) {
+                        System.err.println("An error with name");
+                    }
 
-                System.out.print("create your passowrd: ");
-                String pas = scanner.next();
-                
-                //make the new inputs only be saved at the end 
-                //remove once when nearing end 
-                File file = new File(accName+"PasswordList.txt");
-                
-                try (FileWriter fr = new FileWriter(file, true)) {
-                    fr.write(pas+"\n");
-                    fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
-                } catch (IOException e) {
-                    System.err.println("An error with pas");
-                }
-                    newCategory(scanner,accName);
-                    break;
+                    System.out.print("create your passowrd: ");
+                    String pas = scanner.next();
+                    
+                    //make the new inputs only be saved at the end 
+                    //remove once when nearing end 
+                    File file = new File(accName+"PasswordList.txt");
+                    
+                    try (FileWriter fr = new FileWriter(file, true)) {
+                        fr.write(pas+"\n");
+                        fr.close();//apend code from https://www.geeksforgeeks.org/io-bufferedwriter-class-methods-java/
+                    } catch (IOException e) {
+                        System.err.println("An error with pas");
+                    }
+                        newCategory(scanner,accName);
+                        break;
                 case 2://where you display content
                     System.out.println("would you like to see \n\t1. All accounts\n\t2. Buisness\n\t3. School\n\t4. Personal");
                     System.out.print("Enter your choice (1-4): ");
@@ -413,7 +399,6 @@ public class MainsPassword {
                                     System.out.println("Password: "+pArrayList.get(i)+"\n");
                                 }
                             }
-
                             break;
                         case 3:
                             File schoolUserFile = new File(accName+"UsernameList.txt");
@@ -447,7 +432,6 @@ public class MainsPassword {
                             System.out.println("not a vaild choice");
                             break;
                     }
-
                     break;
                 case 3://modify accounts
                     System.out.println("what would you like to do?");
@@ -475,9 +459,6 @@ public class MainsPassword {
                                 if (createList(new File(accName+"PasswordList.txt")).size() <= realInput){
                                     System.out.println("No account "+userInput);
                                 }
-
-                                
-
                                 checkList2.remove(realInput);
                                 check2two.remove(realInput);
 
@@ -506,7 +487,6 @@ public class MainsPassword {
                                 if (createList(new File(accName+"PasswordList.txt")).size() <= realInput2){
                                     System.out.println("No account "+userInput2);
                                 }
-                                
                                 System.out.println("What would you like to modify?");
                                 System.out.println("\t1. Username\n\t2. Password");
                                 System.out.print("Enter your choice (1-2): ");
@@ -537,38 +517,28 @@ public class MainsPassword {
                         }
                     break;
                 case 4:
-                    // handleNumberFormatException(scanner);
-                    break;
-                case 5:
-                    // handleIllegalArgumentException(scanner);
-                    break;
-                case 6:
-                    // handleRuntimeException(scanner);
-                    break;
-                case 7:
                     System.out.println("Exiting the program. Goodbye!");
                     continueRunning = false;  // Exit the loop and end the program
                     break;
+
                 default:
-                    System.out.println("Invalid choice, please select a number between 1 and 7.");
+                    System.out.println("Invalid choice, please select a number between 1 and 4");
             }
         }
     }
 
 
     public static void listToFile(File file,ArrayList<String> list){//set your account name   
-        
-        
-        
-            try (FileWriter fr = new FileWriter(file)) {
-                for (int i =0;i<list.size();i++) {
-                fr.write(list.get(i)+"\n");  // Write each string to file, followed by a newline
-                }
-                fr.close();
-            }catch (IOException e) {
-                System.err.println("An error with listToFile\n"+e);
-            }
             
+        try (FileWriter fr = new FileWriter(file)) {
+            for (int i =0;i<list.size();i++) {
+            fr.write(list.get(i)+"\n");  // Write each string to file, followed by a newline
+            }
+            fr.close();
+        }catch (IOException e) {
+            System.err.println("An error with listToFile\n"+e);
+        }
+        
     }
 
         
