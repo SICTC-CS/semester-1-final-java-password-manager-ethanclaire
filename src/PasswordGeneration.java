@@ -1,3 +1,4 @@
+package src;
 import java.util.Random;
 
 public class PasswordGeneration {
@@ -28,8 +29,6 @@ public class PasswordGeneration {
             String selectedChar = addThis[random.nextInt(addThis.length)];
             pas += selectedChar;
     
-            
-            
         }
         //to make sure it meets requirments
         pas += "-";
@@ -40,10 +39,6 @@ public class PasswordGeneration {
     
         return pas;
     }
-    
-        
-            
-        
 
     public static void main(String[] args) {
         PasswordGeneration generator = new PasswordGeneration();
